@@ -1,7 +1,7 @@
 [workspace]
 members = ["abi", "service", "reservation"]
 [package]
-name = "template"
+name = "rsvp"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
