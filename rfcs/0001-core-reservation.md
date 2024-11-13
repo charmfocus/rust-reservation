@@ -120,7 +120,7 @@ service ReservationService {
 We use postgres as the database. Below is the schema for the reservation table.
 
 ```sql
-CREATE SCEMA rsvp;
+CREATE SCHEMA rsvp;
 CREATE TYPE rsvp.reservation_status AS ENUM ('unknown', 'pending', 'confirmed', 'blocked', 'canceled');
 CREATE TYPE rsvp.reservation_update_type AS ENUM ('unknown', 'insert', 'update', 'delete');
 CREATE TABLE rsvp.reservations (
