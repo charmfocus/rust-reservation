@@ -1,0 +1,101 @@
+syntax = "proto3";
+package reservation;
+
+import "google/protobuf/timestamp.proto";
+
+enum ReservationStatus {
+  RESERVATION_STATUS_UNKNOWN = 0;
+  ERSERVATION_STATUS_PENDING = 1;
+  ERSERVATION_STATUS_CANCELED = 2;
+  ERSERVATION_STATUS_BLOCKED = 3;
+}
+
+enum ReservationUpdateType {
+  RESERVATION_UPDATE_TYPE_UNKNOWN = 0;
+  RESERVATION_UPDATE_TYPE_INSERT = 1;
+  RESERVATION_UPDATE_TYPE_UPDATE = 2;
+  RESERVATION_UPDATE_TYPE_DELETE = 3;
+}
+
+message Reservation {
+  string id = 1;
+  string user_id = 2;
+  ReservationStatus type = 3;
+
+  // resource reservation window
+  string resource_id = 4;
+  google.protobuf.Timestamp start_time = 5;
+  google.protobuf.Timestamp end_time = 6;
+
+  // extra note
+  string note = 7;
+}
+
+message ReserveRequest {
+  Reservation reservation = 1;
+}
+
+message ReserveResponse {
+  Reservation reservation = 1;
+}
+
+message ConfirmRequest {
+  Reservation reservation = 1;
+}
+
+message ConfirmResponse {
+  Reservation reservation = 1;
+}
+
+message UpdateRequest {
+  string note = 2;
+}
+
+message UpdateResponse {
+  Reservation reservation = 1;
+}
+
+message CancelRequest {
+  string id = 1;
+}
+
+message CancelResponse {
+  Reservation reservation = 1;
+}
+
+message GetRequest {
+  string id = 1;
+}
+
+message GetResponse {
+  Reservation reservation = 1;
+}
+
+message QueryRequest {
+  string resource_id = 1;
+  string user_id = 2;
+  // use status to filter results. If UNKNOWN, all results are returned.
+  ReservationStatus status = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+}
+
+message ListenRequest {
+  // empty
+}
+
+message ListenResponse {
+  ReservationUpdateType op = 1;
+  Reservation reservation = 2;
+}
+
+service ReservationService {
+  rpc Reserve(ReserveRequest) returns (ReserveResponse);
+  rpc Confirm(ConfirmRequest) returns (ConfirmResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Cancel(CancelRequest) returns (CancelResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc Query(QueryRequest) returns (stream Reservation);
+  // another system could monitor newly added/confirmed/canceled reservations
+  rpc Listen(ListenRequest) returns (stream Reservation);
+}
