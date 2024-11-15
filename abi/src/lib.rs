@@ -1,14 +1,14 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+mod pb;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use chrono::{DateTime, Utc};
+pub use pb::*;
+use prost_types::Timestamp;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+pub fn convert_to_utc_time(ts: Timestamp) -> DateTime<Utc> {
+    DateTime::<Utc>::from_naive_utc_and_offset(
+        DateTime::<Utc>::from_timestamp(ts.seconds, ts.nanos.try_into().unwrap())
+            .unwrap()
+            .naive_utc(),
+        Utc,
+    )
 }

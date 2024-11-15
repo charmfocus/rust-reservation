@@ -6,9 +6,9 @@ import "google/protobuf/timestamp.proto";
 // reservation status for a given time period
 enum ReservationStatus {
   RESERVATION_STATUS_UNKNOWN = 0;
-  ERSERVATION_STATUS_PENDING = 1;
-  ERSERVATION_STATUS_CANCELED = 2;
-  ERSERVATION_STATUS_BLOCKED = 3;
+  RESERVATION_STATUS_PENDING = 1;
+  RESERVATION_STATUS_CANCELED = 2;
+  RESERVATION_STATUS_BLOCKED = 3;
 }
 
 // when reservation is updated, record the update type
@@ -90,8 +90,8 @@ message GetResponse {
   Reservation reservation = 1;
 }
 
-// To query reservations, send a QueryRequest
-message QueryRequest {
+// query reservations with resource id, user id, status, start time, end time
+message ReservationQuery {
 // resource id for the reservation query. If empty, query all resources
   string resource_id = 1;
   // user id for the reservation query. If empty, query all users
@@ -102,6 +102,11 @@ message QueryRequest {
   google.protobuf.Timestamp start_time = 4;
   // end time for the reservation query, if 0, use Infinity for end time
   google.protobuf.Timestamp end_time = 5;
+}
+
+// To query reservations, send a QueryRequest
+message QueryRequest {
+  ReservationQuery query = 1;
 }
 
 // Client can listen to reservation updates by sending a ListenRequest

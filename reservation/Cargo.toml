@@ -4,4 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+abi = { version = "0.1.0", path = "../abi" }
+async-trait = "0.1.83"
+chrono = { version = "0.4.38", features = ["serde"] }
 sqlx = { version = "0.8.2", features = ["runtime-tokio-rustls", "postgres", "chrono", "uuid"] }
+thiserror = "2.0.3"
