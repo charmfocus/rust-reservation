@@ -132,7 +132,7 @@ pub struct ListenResponse {
 pub enum ReservationStatus {
     Unknown = 0,
     Pending = 1,
-    Canceled = 2,
+    Confirmed = 2,
     Blocked = 3,
 }
 impl ReservationStatus {
@@ -144,7 +144,7 @@ impl ReservationStatus {
         match self {
             Self::Unknown => "RESERVATION_STATUS_UNKNOWN",
             Self::Pending => "RESERVATION_STATUS_PENDING",
-            Self::Canceled => "RESERVATION_STATUS_CANCELED",
+            Self::Confirmed => "RESERVATION_STATUS_CONFIRMED",
             Self::Blocked => "RESERVATION_STATUS_BLOCKED",
         }
     }
@@ -153,7 +153,7 @@ impl ReservationStatus {
         match value {
             "RESERVATION_STATUS_UNKNOWN" => Some(Self::Unknown),
             "RESERVATION_STATUS_PENDING" => Some(Self::Pending),
-            "RESERVATION_STATUS_CANCELED" => Some(Self::Canceled),
+            "RESERVATION_STATUS_CONFIRMED" => Some(Self::Confirmed),
             "RESERVATION_STATUS_BLOCKED" => Some(Self::Blocked),
             _ => None,
         }
